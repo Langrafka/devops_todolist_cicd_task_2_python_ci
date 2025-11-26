@@ -19,11 +19,11 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./src  # Робоча директорія з manage.py та requirements.txt
+        working-directory: ./src  # manage.py, requirements тут
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup Python ${{ env.PythonVersion }}
       uses: actions/setup-python@v6
@@ -44,13 +44,13 @@ jobs:
       run: |
         coverage run --source='.' manage.py test
         coverage report -m
-        coverage json:coverage.json
+        coverage json -o coverage.json
 
-    - name: Lint code with flake8
+    - name: Lint code with flake8 (not blocking)
       run: |
         flake8 . --exit-zero --statistics
 
-    - name: Check code complexity
+    - name: Check code complexity (not blocking)
       run: |
         flake8 . --max-complexity=10 --exit-zero --statistics
 
@@ -58,4 +58,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: python-code
-        path: ./ 
+        path: ./src
