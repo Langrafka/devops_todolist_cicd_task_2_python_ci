@@ -19,7 +19,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./  # Робоча директорія з manage.py
+        working-directory: ./src  # Робоча директорія з manage.py та requirements.txt
 
     steps:
     - name: Checkout repository
@@ -55,7 +55,7 @@ jobs:
         flake8 . --max-complexity=10 --exit-zero --statistics
 
     - name: Upload Python code as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: python-code
-        path: ./
+        path: ./ 
